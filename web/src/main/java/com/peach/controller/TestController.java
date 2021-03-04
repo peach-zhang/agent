@@ -2,8 +2,9 @@ package com.peach.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.peach.Aop.Log;
+import com.peach.service.ResourcesService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.ResourceUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,12 +21,13 @@ import java.util.Map;
 @RequestMapping("/test")
 public class TestController {
 
+    @Autowired
+    private ResourcesService  resourcesService;
+
     @PostMapping("/getResource")
     @Log(tag = "获取项目下文件测试")
-    public String getResource() throws  Exception{
-        String path = ResourceUtils.getFile("classpath:templates/123.text").getPath();
-        log.info("resource 下文件路径为：{}",path);
-        return path;
+    public String getResource(){
+        return resourcesService.getResourcesPath();
     }
 
     @PostMapping("/testMapParams")
